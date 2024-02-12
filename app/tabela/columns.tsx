@@ -121,6 +121,10 @@ export const columnsPedido: ColumnDef<Cardapio>[] = [
     header: "CPF",
   },
   {
+    accessorKey: "Data",
+    header: "Data",
+  },
+  {
     accessorKey: "Valor",
     header: () => <div className="text-right">Valor</div>,
     cell: ({ row }) => {
