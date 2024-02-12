@@ -60,7 +60,6 @@ export default function Previews({img}) {
           setRet(value) // Success!
         },
         function (reason) {
-          console.log(reason); // Error!
         },)
       
     }
@@ -76,7 +75,6 @@ export default function Previews({img}) {
         return fileReader.result;
       };
       fileReader.onerror = (error) => {
-        console.log(error)
         reject(error);
       };
     });
@@ -96,7 +94,6 @@ export default function Previews({img}) {
   ));
 
   useEffect(() => {
-    console.log(img)
     return () => files.forEach(file => URL.revokeObjectURL(file.preview));
   }, []);
 

@@ -16,43 +16,46 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
+import {setItemCardapio} from '../../service/service'
 
 
-import Previews from './uploadImage/index'
+import Previews from '../uploadImage/index'
 
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
+
 const formSchema = z.object({
-  Nome: z.string(),
-  Descricao : z.string(),
-  Preco : z.coerce.number(),
-  Categoria: z.string(),
-  Destaque: z.boolean(),
-  Promocao: z.boolean(),
-  Imagem : z.string()
+  nome: z.string(),
+  descricao : z.string(),
+  preco : z.coerce.number(),
+  categoria: z.string(),
+  destaque: z.boolean(),
+  promocao: z.boolean(),
+  imagem : z.string()
 
 })
 
 export function ProfileForm() {
-  // 1. Define your form.
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      Nome: "",
-      Descricao: "",
-      Preco: 0,
-      Categoria: "Outros",
-      Destaque: false,
-      Promocao: false,
-      Imagem: ""
+      nome: "",
+      descricao: "",
+      preco: 0,
+      categoria: "Outros",
+      destaque: false,
+      promocao: false,
+      imagem: ""
     },
   })
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("SUBMIT : " + JSON.stringify(values))
+    setItemCardapio(values)
+    .then(result => {alert("Cadastro efetuado com sucesso.");location.reload();})
+    .catch(error => { alert("Ocorreu um erro no cadastro."); });
   }
   
   return (
@@ -60,7 +63,7 @@ export function ProfileForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-8">
         <FormField
           control={form.control}
-          name="Nome"
+          name="nome"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Nome</FormLabel>
@@ -77,7 +80,7 @@ export function ProfileForm() {
         />
         <FormField
           control={form.control}
-          name="Descricao"
+          name="descricao"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Descricao</FormLabel>
@@ -93,7 +96,7 @@ export function ProfileForm() {
         />
         <FormField
           control={form.control}
-          name="Preco"
+          name="preco"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Preço</FormLabel>
@@ -109,7 +112,7 @@ export function ProfileForm() {
         />
         <FormField
           control={form.control}
-          name="Categoria"
+          name="categoria"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Categoria</FormLabel>
@@ -127,7 +130,7 @@ export function ProfileForm() {
             <div className="flex flex-col w-35 h-35">
                 <FormField 
                 control={form.control}
-                name="Destaque"
+                name="destaque"
                 render={({ field }) => (
                     <FormItem>
                     <FormLabel>Destaque</FormLabel>
@@ -144,7 +147,7 @@ export function ProfileForm() {
                 <div className="flex flex-col w-35 h-35">
                 <FormField
                 control={form.control}
-                name="Promocao"
+                name="promocao"
                 render={({ field }) => (
                     <FormItem>
                     <FormLabel>Promocao</FormLabel>
@@ -161,7 +164,7 @@ export function ProfileForm() {
                <div className="flex flex-col w-50 h-40">
                 <FormField
                 control={form.control}
-                name="Imagem"
+                name="imagem"
                 render={({ field }) => (
                     <FormItem>
                     <FormLabel>Imagem do Item</FormLabel>
