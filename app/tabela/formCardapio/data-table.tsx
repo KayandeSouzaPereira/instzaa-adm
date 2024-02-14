@@ -67,10 +67,10 @@ export function DataTable<TData, TValue>({
     <div className="w-full">
       <div className="flex items-center py-4 bg-slate-900">
       {table.getColumn("nome")? 
-      <div className="flex w-full mx-5 items-center py-4 bg-slate-900">
+      <div className="flex w-full mx-5 items-center py-4 bg-slate-900 ">
         <Dialog>
-              <DialogTrigger className="bg-slate-500 p-1 mx-5 h-30 w-30">
-                <div className="bg-slate-30">
+              <DialogTrigger className="bg-slate-500 p-1 mx-5 h-30 w-30 rounded-md">
+                <div className="bg-slate-30 rounded-md">
                   <PlusIcon className="h-5 w-5"/>
                 </div>
               </DialogTrigger>
