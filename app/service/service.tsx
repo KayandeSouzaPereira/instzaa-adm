@@ -1,9 +1,19 @@
-import { headers } from "next/headers";
 import api from "./api"
 import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
 
-  function getCardapio(): Promise<Cardapio[]>  {
-    return api.get('cardapio/listCardapio')
+  function login(body:any): Promise<String>{
+    return api.post("auth/login", body)
+  }
+
+  function getCardapio(token:String): Promise<Cardapio[]>  {
+    const config = {
+      headers: { 
+      Authorization: `Bearer ${token}`,
+      "Cache-Control": "no-cache",
+      "Content-Type": "application/x-www-form-urlencoded",
+    }
+    };
+    return api.get('cardapio/', config)
     }  
     
     function getItemCardapio(id:number) {
@@ -14,7 +24,7 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
         return api.post('cardapio/findByIDCardapioItem', bodyParameters)
     }
 
-    function deleteItemCardapio(id:number) {
+    function deleteItemCardapio(id:string) {
     
         const bodyParameters = {
             id
@@ -36,8 +46,11 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
   
  
   
-  function getPedidos(): Promise<Pedido[]> {
-    return api.get('pedido/listPedido')
+  function getPedidos(token:String): Promise<Pedido[]> {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+    return api.get('pedido/', config)
     }  
 
   function getPedidoId(id:number) {
@@ -45,6 +58,7 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
       const bodyParameters = {
           id
       };
+      
       return api.post('pedido/findByIDPedido', bodyParameters)
   }
 
@@ -62,4 +76,4 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
   }
 
 
-export { getCardapio,getItemCardapio,deleteItemCardapio, setItemCardapio, getPedidos, getPedidoId, deletePedido, savePedido}
+export { login,getCardapio,getItemCardapio,deleteItemCardapio, setItemCardapio, getPedidos, getPedidoId, deletePedido, savePedido}

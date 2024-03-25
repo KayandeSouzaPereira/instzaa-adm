@@ -43,13 +43,13 @@ export type Cardapio = {
   
 
 export type Pedido = {
-    idPedido: number
+    id: number
     nomeCliente: String
     cpf: String
     endereco: String
     data: String
     valor: String
-    status: number
+    status: null
     numeroContato: number
   }
 
@@ -79,13 +79,13 @@ export const columns: ColumnDef<Cardapio>[] = [
         id: "ações",
         cell: ({ row }) => {
           const cardapio = row.original
-          const id = cardapio.idCardapio;
-          const destaque = cardapio.destaque==1 ? true : false
-          const promocao = cardapio.promocao==1 ? true : false
+          const id = cardapio.id;
+          const destaque = cardapio.destaque
+          const promocao = cardapio.promocao
 
 
           let edit = {
-            idCardapio: id,
+            id: id,
             nome: cardapio.nome,
             descricao : cardapio.descricao,
             preco : cardapio.preco,
@@ -119,7 +119,7 @@ export const columns: ColumnDef<Cardapio>[] = [
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Ações</DropdownMenuLabel>
                   <DropdownMenuItem
-                    onClick={() => navigator.clipboard.writeText(cardapio.idCardapio)}
+                    onClick={() => navigator.clipboard.writeText(cardapio.id)}
                   >
                   Copiar ID
                   </DropdownMenuItem>
@@ -128,7 +128,7 @@ export const columns: ColumnDef<Cardapio>[] = [
                   onClick={
                     () => {
                       var r = confirm("Tem Certeza que deseja apagar o item : " + cardapio.nome  + " ? ");
-                      if(r === true) {deleteItemCardapio(cardapio.idCardapio);location.reload();}
+                      if(r === true) {deleteItemCardapio(cardapio.id);location.reload();}
                     }}
                     >Remover</DropdownMenuItem>
                 </DropdownMenuContent>
@@ -169,7 +169,7 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
 
 
           let edit = {
-            idPedido: pedido.idPedido,
+            id: pedido.id,
             nomeCliente: pedido.nomeCliente,
             cpf : pedido.cpf,
             endereco: pedido.endereco,
@@ -203,7 +203,7 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Ações</DropdownMenuLabel>
                 <DropdownMenuItem
-                  onClick={() => navigator.clipboard.writeText(pedido.idPedido)}
+                  onClick={() => navigator.clipboard.writeText(pedido.id)}
                 >
                  Copiar ID
                 </DropdownMenuItem>
@@ -212,7 +212,7 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
                 onClick={
                   () => {
                     var r = confirm("Tem Certeza que deseja apagar o pedido do : " + pedido.nomeCliente  + " ? ");
-                    if(r === true) {deletePedido(pedido.idPedido);location.reload();}
+                    if(r === true) {deletePedido(pedido.id);location.reload();}
                   }}
                 >Remover</DropdownMenuItem>
               </DropdownMenuContent>

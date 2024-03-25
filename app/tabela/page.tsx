@@ -1,28 +1,41 @@
-import { Cardapio, columns, columnsPedido, Pedido } from "./formCardapio/columns"
+import { columns, Cardapio } from "../components/columns"
 import { DataTable } from "./formCardapio/data-table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { getCardapio } from "../service/service";
 
-import { getCardapio, getPedidos } from "../service/service"
-
-
-async function getData(): Promise<Cardapio[]> {
-  return getCardapio()
-  .then(result => { return result.data.lista; })
-  .catch(error => { return Promise.reject(error); });
+ async function getData(): Promise<Cardapio[]> {
+  let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxMTMwMjU3MCwiZXhwIjoxNzExNTYxNzcwfQ.Sd_sAYA8Q_9EapzRWHWJ3LkWpcYzhc3yzXvGGQVKej4";
+  return getCardapio(token)
+  .then(result => { return result.data;})
+  .catch(error => { console.log(error); return Promise.reject(error); });
 }
-
+/*
 async function getData2(): Promise<Pedido[]> {
     // Fetch data from your API here.
-    return getPedidos()
-    .then(result => { return result.data.lista; })
+    let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxMTMwMjU3MCwiZXhwIjoxNzExNTYxNzcwfQ.Sd_sAYA8Q_9EapzRWHWJ3LkWpcYzhc3yzXvGGQVKej4";
+  return getPedidos(token)
+    .then(result => { console.log(result.data); return result.data; })
     .catch(error => { return Promise.reject(error); });
-  }
+  } */
 
-export default async function Dashboard() {
+export default function Dashboard() {
 
-  const data = await getData()
-  const data2 = await getData2();
+  const data = getData();
+  //const data2 = await getData2();
 
+  /* const data: Cardapio[] =
+  [
+    {
+      id: '152',
+      nome: 'Pizza de Calabresa',
+      descricao: 'Pizza com Calabresa e cebola',
+      imagem: '',
+      preco: 0.00,
+      categoria: 'pizza',
+      destaque: false,
+      promocao: true
+    }
+  ]; */
   
 
   return (
@@ -40,8 +53,8 @@ export default async function Dashboard() {
         <TabsContent value="Cardapio">
             <DataTable columns={columns} data={data} />
         </TabsContent>
-        <TabsContent  value="Pedidos">
-            <DataTable columns={columnsPedido} data={data2} />
+         <TabsContent  value="Pedidos">
+           
         </TabsContent>
         
         </Tabs>
