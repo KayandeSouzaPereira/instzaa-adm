@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useState } from "react"
+
 import Link from 'next/link';
 
 import { Button } from "@/components/ui/button"
@@ -46,7 +47,7 @@ function onSubmit(values: z.infer<typeof formSchema>) {
   .then(result => { 
     alert("Login efetuado com sucesso."); 
     localStorage.setItem("token", result.data.token); 
-    document.location.href = "/gestao";})
+    document.location.href = "/dashboard";})
   .catch(error => { alert("Ocorreu um erro no login."); });
 }
    

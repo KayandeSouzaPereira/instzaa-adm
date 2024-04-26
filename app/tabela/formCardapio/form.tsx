@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
-import {setItemCardapio} from '../../service/service'
+import {cadastroItemCardapio} from '../../service/service'
 
 
 import Previews from '../uploadImage/index'
@@ -53,7 +53,7 @@ export function ProfileForm() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setItemCardapio(values)
+    cadastroItemCardapio(values)
     .then(result => {alert("Cadastro efetuado com sucesso.");location.reload();})
     .catch(error => { alert("Ocorreu um erro no cadastro."); });
   }

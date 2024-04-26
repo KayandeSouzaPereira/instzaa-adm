@@ -1,3 +1,4 @@
+"use client"
 
 import "./globals.css"
 import { Inter as FontSans } from "next/font/google"
@@ -9,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import Spline from '@splinetool/react-spline';
 import Link from 'next/link';
 
 
@@ -21,9 +23,9 @@ export const fontSans = FontSans({
 
 export default function Home() {
   return (
+    
     <main className="flex min-h-screen flex-col items-center pt-5 ph-20 h-full">
-      <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.79/build/spline-viewer.js"></script>
-      <spline-viewer url="https://prod.spline.design/LnG4vWbScej-SnCk/scene.splinecode" className="absolute inset-0 z-0"></spline-viewer>
+      <Spline scene="https://prod.spline.design/LnG4vWbScej-SnCk/scene.splinecode" className="absolute inset-0 z-0"/>
         <div className="absolute flex min-h-screen h-full flex-row items-start pt-[200px] left-[150px]">
       <Card className="w-[350px] justify">
       <CardHeader>

@@ -89,7 +89,9 @@ export const columns: ColumnDef<Cardapio>[] = [
                   onClick={
                     () => {
                       var r = confirm("Tem Certeza que deseja apagar o item : " + cardapio.nome  + " ? ");
-                      if(r === true) {deleteItemCardapio(cardapio.id);location.reload();}
+                      if(r === true) {console.log("TESTE")}
+                      if(r == false) {console.log("TESTE2")}
+                        //{deleteItemCardapio(cardapio.id);location.reload();}
                     }}
                     >Remover</DropdownMenuItem>
                 </DropdownMenuContent>

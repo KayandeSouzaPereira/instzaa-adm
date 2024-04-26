@@ -28,7 +28,7 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/web
 
 
 export const formSchema = z.object({
-  idCardapio: z.number(),
+  id: z.number(),
   nome: z.string(),
   descricao : z.string(),
   preco : z.coerce.number(),
@@ -47,7 +47,7 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
     resolver: zodResolver(formSchema),
 
     defaultValues: {
-      idCardapio: formEdit.formEdit.idCardapio,
+      id: formEdit.formEdit.id,
       nome: formEdit.formEdit.nome,
       descricao: formEdit.formEdit.descricao,
       preco: formEdit.formEdit.preco,
@@ -62,11 +62,11 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
 
-    setItemCardapio(values)
+    setItemCardapio(values, values.id)
     .then(result => {alert("Edição efetuada com sucesso.");
     location.reload();
     })
-    .catch(error => { alert("Ocorreu um erro na edição."); });
+    .catch(error => {alert("Ocorreu um erro na edição: "+ error); });
   }
   
   return (
@@ -76,7 +76,7 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-8">
         <FormField
             control={form.control}
-            name="idCardapio"
+            name="id"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
