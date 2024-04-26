@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
-import {savePedido} from '../../service/service'
+import {updatePedido} from '../../service/service'
 
 
 import Previews from '../uploadImage/index'
@@ -28,7 +28,7 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/web
 
 
 export const formSchemaPedido = z.object({
-  idPedido: z.number(),
+  id: z.number(),
   nomeCliente: z.string(),
   cpf : z.string(),
   endereco: z.string(),
@@ -36,20 +36,22 @@ export const formSchemaPedido = z.object({
   numeroContato: z.string(),
   valor : z.coerce.number(),
   resumoPedido: z.string(),
-  status: z.number()
+  status: z.string()
 })
 
-function statusCOD(val:number) {
+function statusCOD(val:String) {
 
   var answer = "";
+
+  
   switch( val ) {
-    case 1: 
+    case "Fabricando": 
       answer = "Em Fabricação";
       break;
-    case 2: 
+    case "Enviado": 
       answer = "Enviado";
       break;
-    case 3: 
+    case "Concluido": 
       answer = "Concluído";
       break;
     default:
@@ -66,7 +68,7 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
     resolver: zodResolver(formSchemaPedido),
 
     defaultValues: {
-      idPedido: formEdit.formEdit.idPedido,
+      id: formEdit.formEdit.id,
       nomeCliente: formEdit.formEdit.nomeCliente,
       cpf: formEdit.formEdit.cpf,
       endereco: formEdit.formEdit.endereco,
@@ -81,7 +83,8 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
   })
 
   function onSubmit(values: z.infer<typeof formSchemaPedido>) {
-    savePedido(values)
+    console.log("SUBMIT")
+    updatePedido(values)
     .then(result => {alert("Edição efetuada com sucesso.");
     location.reload();
   })
@@ -95,7 +98,7 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-8">
         <FormField
             control={form.control}
-            name="idPedido"
+            name="id"
             render={({ field }) => (
               <FormItem>
                 <FormControl>

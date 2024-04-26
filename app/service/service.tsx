@@ -31,6 +31,8 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
         headers: { 
         Authorization: `Bearer ${token}`,
         "Cache-Control": "no-cache",
+          "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
       }
       };
         
@@ -44,12 +46,13 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
         headers: {
           "Cache-Control": "no-cache",
           "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         }
       };
       const data = JSON.stringify(body)
       
-      return api.post('cardapio/', data, config)
+      return api.post('cardapio', data, config)
     }
 
     function setItemCardapio(body:Cardapio, id:String) {
@@ -59,6 +62,7 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
         headers: {
           "Cache-Control": "no-cache",
           "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         }
       };
@@ -88,17 +92,46 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
   }
 
   function deletePedido(id:number) {
-  
-      const bodyParameters = {
-          id
+    let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
+      
+      const config = {
+        headers: {
+          "Cache-Control": "no-cache",
+          "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }
       };
-      return api.post('pedido/deletePedido', bodyParameters)
+      return api.delete('pedido/' + id, config)
   }
 
   function savePedido(body:any) {
-    
-    return api.post('pedido/savePedido', body)
+    let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
+      
+      const config = {
+        headers: {
+          "Cache-Control": "no-cache",
+          "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }
+      };
+    return api.post('pedido/savePedido', body, config)
+  }
+
+  function updatePedido(body:any) {
+    let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
+      
+      const config = {
+        headers: {
+          "Cache-Control": "no-cache",
+          "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }
+      };
+    return api.put('pedido/savePedido', body, config)
   }
 
 
-export { login,getCardapio,getItemCardapio,deleteItemCardapio,cadastroItemCardapio, setItemCardapio, getPedidos, getPedidoId, deletePedido, savePedido}
+export { login,getCardapio,getItemCardapio,deleteItemCardapio,cadastroItemCardapio, setItemCardapio, getPedidos, getPedidoId, deletePedido, savePedido, updatePedido}

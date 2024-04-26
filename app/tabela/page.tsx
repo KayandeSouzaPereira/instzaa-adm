@@ -1,7 +1,7 @@
-import { columns, Cardapio } from "../components/columns"
+import { columns, Cardapio, Pedidos, columnsPedido } from "../components/columns"
 import { DataTable } from "./formCardapio/data-table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { getCardapio } from "../service/service";
+import { getCardapio, getPedidos } from "../service/service";
 
  async function getData(): Promise<Cardapio[]> {
   let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
@@ -10,13 +10,20 @@ import { getCardapio } from "../service/service";
   .catch(error => {return Promise.reject(error);})
 }
 
+async function getData2(): Promise<Pedido[]> {
+  let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
+  return getPedidos(token)
+  .then(result => {console.log(result.data); return result.data;})
+  .catch(error => {return Promise.reject(error);})
+}
+
 
 export default async function Dashboard() {
   let data: Cardapio[] = await getData();
   
-  //const data2 = await getData2();
+  const data2 = await getData2();
 
-   const data2: Cardapio[] =
+  /*  const data2: Cardapio[] =
   [
     {
       id: 302,
@@ -28,7 +35,7 @@ export default async function Dashboard() {
       destaque: false,
       promocao: true
     },
-  ]; 
+  ];  */
   
 
   return (
@@ -47,7 +54,7 @@ export default async function Dashboard() {
             <DataTable columns={columns} data={data} />
         </TabsContent>
          <TabsContent  value="Pedidos">
-         <DataTable columns={columns} data={data2} />
+         <DataTable columns={columnsPedido} data={data2} />
         </TabsContent>
         
         </Tabs>
