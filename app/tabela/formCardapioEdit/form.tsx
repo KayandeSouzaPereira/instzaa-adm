@@ -66,7 +66,7 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
     .then(result => {alert("Edição efetuada com sucesso.");
     location.reload();
     })
-    .catch(error => {alert("Ocorreu um erro na edição: "+ error); });
+    .catch(error => {alert("Ocorreu um erro na edição"); });
   }
   
   return (

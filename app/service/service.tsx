@@ -1,17 +1,37 @@
+"use server"
 import api from "./api"
 import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
+import { cookies } from "next/headers";
 
-
-  function login(body:any): Promise<String>{
-    return api.post("auth/login", body)
+  function saveToken(body:any){
+     api.post("auth/login", body).then(
+      result => { 
+        console.log(result.data.token);
+        const oneDay = 24 * 60 * 60 * 1000
+       cookies().set('token', result.data.token, { expires: Date.now() - oneDay })
+    }).catch(err => {console.log("error")});
+   
+      
   }
 
-  function getCardapio(token:String): Cardapio[]  {
+
+  async function login(body:any) {
+    try {
+      const resp = await api.post("auth/login", body)
+      return resp.data
+    } catch (err: any){
+      return err.response.data
+    }
+    
+  }
+
+  function getCardapio(token:String) {
+    let tkk = cookies().get("token").value
     const config = {
       headers: { 
-      Authorization: `Bearer ${token}`,
-      "Cache-Control": "no-cache",
-    }
+        Authorization: `Bearer ${tkk}`,
+        "Cache-Control": "no-cache",
+      }
     };
     return api.get('cardapio/', config) 
   }  
@@ -25,8 +45,7 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
     }
 
     function deleteItemCardapio(id:string) {
-      console.log("DELETE : " + id)
-      let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
+      let token = cookies().get("token").value
       const config = {
         headers: { 
         Authorization: `Bearer ${token}`,
@@ -39,9 +58,8 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
         return api.delete('cardapio/'+ id, config)
     }
 
-    function cadastroItemCardapio(body:Cardapio) {
-      let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
-      
+    async function cadastroItemCardapio(body:CardapioDTO) {
+      let token = cookies().get("token").value
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -52,12 +70,16 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
       };
       const data = JSON.stringify(body)
       
-      return api.post('cardapio', data, config)
+      try{
+        let ret = await  api.post('cardapio', data, config)
+        return ret.data
+      }catch (err: any){
+        return err.response.data
+      }
     }
 
-    function setItemCardapio(body:Cardapio, id:String) {
-      let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
-      
+    async function setItemCardapio(body:Cardapio, id:String) {
+      let token = cookies().get("token").value
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -68,7 +90,12 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
       };
       let data = JSON.stringify(body)
       
-      return api.put('cardapio/'+id, body, config)
+      try {
+        const resp = await api.put('cardapio/'+id, body, config)
+        return resp.data
+      }catch (err: any){
+        return err.response.data
+      }
     }
   
 
@@ -76,8 +103,9 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
  
   
   function getPedidos(token:String): Promise<Pedido[]> {
+    let tkk = cookies().get("token").value
     const config = {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${tkk}` }
     };
     return api.get('pedido/', config)
     }  
@@ -92,8 +120,7 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
   }
 
   function deletePedido(id:number) {
-    let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
-      
+    let token = cookies().get("token").value
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -106,8 +133,7 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
   }
 
   function savePedido(body:any) {
-    let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
-      
+    let token = cookies().get("token").value 
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -119,9 +145,8 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
     return api.post('pedido/savePedido', body, config)
   }
 
-  function updatePedido(body:any) {
-    let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
-      
+  async function updatePedido(body:any, id) {
+    let token = cookies().get("token").value
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -130,8 +155,14 @@ import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
           Authorization: `Bearer ${token}`,
         }
       };
-    return api.put('pedido/savePedido', body, config)
+    try{
+      let ret = await api.put('pedido/'+id, body, config)
+      console.log("updatePedido")
+      return ret.data
+    }catch (err: any){
+      return err.response.data
+    }
   }
 
 
-export { login,getCardapio,getItemCardapio,deleteItemCardapio,cadastroItemCardapio, setItemCardapio, getPedidos, getPedidoId, deletePedido, savePedido, updatePedido}
+export { saveToken,login,getCardapio,getItemCardapio,deleteItemCardapio,cadastroItemCardapio, setItemCardapio, getPedidos, getPedidoId, deletePedido, savePedido, updatePedido}

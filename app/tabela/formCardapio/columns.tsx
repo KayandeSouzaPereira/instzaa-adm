@@ -35,8 +35,18 @@ export type Cardapio = {
   descricao: String
   preco: number
   categoria: String
-  promocao: number
-  destaque: number
+  promocao: boolean
+  destaque: boolean
+  imagem: string
+}
+
+export type CardapioDTO = {
+  nome: String
+  descricao: String
+  preco: number
+  categoria: String
+  promocao: boolean
+  destaque: boolean
   imagem: string
 }
 

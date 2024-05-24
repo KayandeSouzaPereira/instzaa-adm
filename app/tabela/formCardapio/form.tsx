@@ -34,7 +34,6 @@ const formSchema = z.object({
   destaque: z.boolean(),
   promocao: z.boolean(),
   imagem : z.string()
-
 })
 
 export function ProfileForm() {
@@ -54,7 +53,7 @@ export function ProfileForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     cadastroItemCardapio(values)
-    .then(result => {alert("Cadastro efetuado com sucesso.");location.reload();})
+    .then(result => {alert("Cadastro efetuado com sucesso."); document.location.href = "/dashboard/";})
     .catch(error => { alert("Ocorreu um erro no cadastro."); });
   }
   

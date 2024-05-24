@@ -5,8 +5,6 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useState } from "react"
 
-import Link from 'next/link';
-
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -19,14 +17,17 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-
 import { login } from '../../service/service'
-
+import { paramSave } from "../token"
+import { getCookie, setCookie } from 'cookies-next'
 
 const formSchema = z.object({
     email: z.string().min(4, {message: "O usuário precisa ter mais de 4 caracteries."}),
     password: z.string().min(8, {message: "A senha precisa ter mais de 8 digitos."})
 })
+
+
+
 
 
 
@@ -42,14 +43,20 @@ export function Loginform() {
     }
   })
 
-function onSubmit(values: z.infer<typeof formSchema>) {
-  login(values)
-  .then(result => { 
-    alert("Login efetuado com sucesso."); 
-    localStorage.setItem("token", result.data.token); 
-    document.location.href = "/dashboard";})
-  .catch(error => { alert("Ocorreu um erro no login."); });
-}
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    
+    login(values)
+    .then(result => { 
+      if(result.title === "Unauthorized"){
+        alert("Usuário ou Senha estão incorretos.");
+      }else{
+        alert("Login efetuado com sucesso.");
+        setCookie("token", result.token)
+        document.location.href = "/dashboard";
+      }})
+    .catch(error => { alert("Ocorreu um erro no login: " + error); });
+  }
+
    
     return (
       <Form {...form}>

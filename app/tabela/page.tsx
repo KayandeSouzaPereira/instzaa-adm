@@ -1,43 +1,28 @@
-import { columns, Cardapio, Pedidos, columnsPedido } from "../components/columns"
+
+import { columns, Cardapio, Pedido, columnsPedido } from "../components/columns"
 import { DataTable } from "./formCardapio/data-table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getCardapio, getPedidos } from "../service/service";
-
+import { params } from "../components/token";
  async function getData(): Promise<Cardapio[]> {
-  let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
-  return getCardapio(token)
-  .then(result => {return result.data;})
-  .catch(error => {return Promise.reject(error);})
+  const tkTest = await params();
+    return getCardapio(tkTest)
+    .then(result => {return result.data;})
+    .catch(error => {return Promise.reject(error);})
 }
 
 async function getData2(): Promise<Pedido[]> {
-  let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXlhbkB0ZXN0LmNvbSIsImlhdCI6MTcxNDA3MjczNywiZXhwIjoxNzE0MzMxOTM3fQ.dfhq3kSwikBvELldfJUXDnOTwwsz_VEMI_0QGwq3ozU"
-  return getPedidos(token)
-  .then(result => {console.log(result.data); return result.data;})
-  .catch(error => {return Promise.reject(error);})
+  const tkTest = await params();
+    return getPedidos(tkTest)
+    .then(result => {return result.data;})
+    .catch(error => {return Promise.reject(error);})
 }
 
 
 export default async function Dashboard() {
-  let data: Cardapio[] = await getData();
-  
-  const data2 = await getData2();
-
-  /*  const data2: Cardapio[] =
-  [
-    {
-      id: 302,
-      nome: 'Pizza de Frango',
-      descricao: 'Pizza com Frango',
-      imagem: '',
-      preco: 42,
-      categoria: 'pizza',
-      destaque: false,
-      promocao: true
-    },
-  ];  */
-  
-
+  const data: Cardapio[] = await getData();
+  const data2: Pedido[] = await getData2();
+  console.log(data2[0].resumoPedido);
   return (
     <div className="container w-full">
         <Tabs defaultValue="Cardapio" className="w-[800px]">
@@ -46,10 +31,13 @@ export default async function Dashboard() {
         
 
         <div className="w-[600px]"></div>
+        <TabsTrigger value="Caixa">Caixa</TabsTrigger>
         <TabsTrigger value="Cardapio">Cardapio</TabsTrigger>
         <TabsTrigger value="Pedidos">Pedidos</TabsTrigger>
            
         </TabsList>
+        <TabsContent value="Caixa">
+        </TabsContent>
         <TabsContent value="Cardapio">
             <DataTable columns={columns} data={data} />
         </TabsContent>

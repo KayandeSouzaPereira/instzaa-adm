@@ -131,7 +131,7 @@ export type Pedido = {
   endereco: String
   data: String
   valor: String
-  status: null
+  status: String
   numeroContato: number
   resumoPedido: Cardapio[]
 }
@@ -156,6 +156,7 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
           resumoPedido : pedido.resumoPedido,
           cpf: pedido.cpf
         }
+
    
         return (
           <Dialog>
@@ -164,7 +165,7 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                <DialogTitle>Edite um item ao cardápio </DialogTitle>
+                <DialogTitle>Edite o pedido </DialogTitle>
                 <DialogDescription>
                 < PedidoFormEdit formEdit={edit}/>    
                 </DialogDescription>

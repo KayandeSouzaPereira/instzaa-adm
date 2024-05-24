@@ -32,11 +32,20 @@ export const formSchemaPedido = z.object({
   nomeCliente: z.string(),
   cpf : z.string(),
   endereco: z.string(),
-  data: z.string(),
+  data: z.number(),
   numeroContato: z.string(),
   valor : z.coerce.number(),
-  resumoPedido: z.string(),
-  status: z.string()
+  status: z.string(),
+  resumoPedido: z.object({
+    id: z.number(),
+    nome: z.string(),
+    descricao : z.string(),
+    preco : z.coerce.number(),
+    categoria: z.string(),
+    destaque: z.boolean(),
+    promocao: z.boolean(),
+    imagem : z.string() 
+  }).array()
 })
 
 function statusCOD(val:String) {
@@ -60,8 +69,21 @@ function statusCOD(val:String) {
   return answer;
 }
 
-export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
+function data(val:String){
+  var a = new Date(val * 1000);
+  /* var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  return time */
+  return a.toUTCString();
+}
 
+export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
   const form = useForm<z.infer<typeof formSchemaPedido>>({
     
 
@@ -84,7 +106,7 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
 
   function onSubmit(values: z.infer<typeof formSchemaPedido>) {
     console.log("SUBMIT")
-    updatePedido(values)
+    updatePedido(values, values.id)
     .then(result => {alert("Edição efetuada com sucesso.");
     location.reload();
   })
@@ -95,7 +117,7 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
     <div>
       
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-8">
         <FormField
             control={form.control}
             name="id"
@@ -116,6 +138,19 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
               <FormItem>
                 <FormControl>
                   <Badge variant="outline">Status : {statusCOD(field.value)}</Badge>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+              
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="data"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Badge variant="outline">Data : {data(field.value)}</Badge>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -200,7 +235,22 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
               </FormItem>
             )}
           />
-          
+          {/* <FormField
+            control={form.control}
+            name="resumoPedido"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                {field.map((field, i) =>{
+                  return (
+                    <Badge variant="outline">Teste : {field.nome}</Badge>
+                  )
+                })}
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          /> */}
           <div className="">
               <Button type="submit">Enviar</Button>
           </div>
