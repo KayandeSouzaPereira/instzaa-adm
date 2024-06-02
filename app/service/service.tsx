@@ -6,7 +6,6 @@ import { cookies } from "next/headers";
   function saveToken(body:any){
      api.post("auth/login", body).then(
       result => { 
-        console.log(result.data.token);
         const oneDay = 24 * 60 * 60 * 1000
        cookies().set('token', result.data.token, { expires: Date.now() - oneDay })
     }).catch(err => {console.log("error")});
@@ -59,6 +58,7 @@ import { cookies } from "next/headers";
     }
 
     async function cadastroItemCardapio(body:CardapioDTO) {
+      console.log("CORPO : " + JSON.stringify(body))
       let token = cookies().get("token").value
       const config = {
         headers: {
@@ -72,6 +72,7 @@ import { cookies } from "next/headers";
       
       try{
         let ret = await  api.post('cardapio', data, config)
+        
         return ret.data
       }catch (err: any){
         return err.response.data
@@ -80,6 +81,7 @@ import { cookies } from "next/headers";
 
     async function setItemCardapio(body:Cardapio, id:String) {
       let token = cookies().get("token").value
+      console.log("CORPO : " + JSON.stringify(body))
       const config = {
         headers: {
           "Cache-Control": "no-cache",

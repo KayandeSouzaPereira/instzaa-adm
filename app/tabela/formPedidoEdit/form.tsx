@@ -5,26 +5,14 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form,FormControl,FormDescription,FormField, FormItem,FormLabel,FormMessage} from "@/components/ui/form"
+import { Card, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {updatePedido} from '../../service/service'
+import PreviewsPedido from "../uploadImagePedido"
 
-
-import Previews from '../uploadImage/index'
-
-
-const MAX_FILE_SIZE = 5000000;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
 
 export const formSchemaPedido = z.object({
@@ -36,16 +24,18 @@ export const formSchemaPedido = z.object({
   numeroContato: z.string(),
   valor : z.coerce.number(),
   status: z.string(),
-  resumoPedido: z.object({
-    id: z.number(),
-    nome: z.string(),
-    descricao : z.string(),
-    preco : z.coerce.number(),
-    categoria: z.string(),
-    destaque: z.boolean(),
-    promocao: z.boolean(),
-    imagem : z.string() 
-  }).array()
+  resumoPedido: z.array(
+    z.object({
+      id: z.number(),
+      nome: z.string(),
+      descricao : z.string(),
+      preco : z.coerce.number(),
+      categoria: z.string(),
+      destaque: z.boolean(),
+      promocao: z.boolean(),
+      imagem : z.string()
+    })
+  )
 })
 
 function statusCOD(val:String) {
@@ -69,21 +59,15 @@ function statusCOD(val:String) {
   return answer;
 }
 
-function data(val:String){
-  var a = new Date(val * 1000);
-  /* var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var year = a.getFullYear();
-  var month = months[a.getMonth()];
-  var date = a.getDate();
-  var hour = a.getHours();
-  var min = a.getMinutes();
-  var sec = a.getSeconds();
-  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-  return time */
-  return a.toUTCString();
+function data(val:number){
+  var a = new Date(val);
+  var b = a.getUTCHours();
+  return a.toLocaleString();
 }
 
 export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
+  console.log(formEdit.formEdit.resumoPedido);
+  const pedidos = formEdit.formEdit.resumoPedido;
   const form = useForm<z.infer<typeof formSchemaPedido>>({
     
 
@@ -97,15 +81,29 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
       data: formEdit.formEdit.data,
       numeroContato: formEdit.formEdit.numeroContato,
       valor: formEdit.formEdit.valor,
-      resumoPedido: formEdit.formEdit.resumoPedido,
       status: formEdit.formEdit.status,
+      resumoPedido: pedidos
     },
 
 
   })
 
+  const pedidoList = pedidos.map(pedido =>
+    <div className="p-6">
+      <Card>
+        <CardHeader>
+          <CardDescription>Nome : {pedido.nome}</CardDescription>
+        </CardHeader>
+        <CardFooter>
+          <FormDescription>Preço R$: {pedido.preco}</FormDescription>
+          <PreviewsPedido img={pedido.imagem}/>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+
   function onSubmit(values: z.infer<typeof formSchemaPedido>) {
-    console.log("SUBMIT")
+    console.log(values);
     updatePedido(values, values.id)
     .then(result => {alert("Edição efetuada com sucesso.");
     location.reload();
@@ -114,7 +112,7 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
   }
   
   return (
-    <div>
+    <ScrollArea className="h-[800px] w-[450px] p-4">
       
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-8">
@@ -235,28 +233,23 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
               </FormItem>
             )}
           />
-          {/* <FormField
-            control={form.control}
-            name="resumoPedido"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                {field.map((field, i) =>{
-                  return (
-                    <Badge variant="outline">Teste : {field.nome}</Badge>
-                  )
-                })}
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
+          <ul>
+            <CardTitle>
+              Resumo do Pedido:
+            </CardTitle>
+              <ScrollArea className="h-[300px] w-[400px] p-4">
+              {pedidoList}
+              </ScrollArea>
+            </ul>
           <div className="">
               <Button type="submit">Enviar</Button>
           </div>
+          
         </form>
       </Form>
-    </div>
+     
+    </ScrollArea>
+    
   )
 
 }

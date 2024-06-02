@@ -22,7 +22,6 @@ async function getData2(): Promise<Pedido[]> {
 export default async function Dashboard() {
   const data: Cardapio[] = await getData();
   const data2: Pedido[] = await getData2();
-  console.log(data2[0].resumoPedido);
   return (
     <div className="container w-full">
         <Tabs defaultValue="Cardapio" className="w-[800px]">

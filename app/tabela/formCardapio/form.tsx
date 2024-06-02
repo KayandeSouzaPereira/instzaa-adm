@@ -52,12 +52,15 @@ export function ProfileForm() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    cadastroItemCardapio(values)
+    const _values = values
+    _values.imagem = localStorage.getItem('base64') 
+    cadastroItemCardapio(_values)
     .then(result => {alert("Cadastro efetuado com sucesso."); document.location.href = "/dashboard/";})
     .catch(error => { alert("Ocorreu um erro no cadastro."); });
   }
   
   return (
+  <div className="h-[800px] w-[450px] p-4">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-8">
         <FormField
@@ -181,6 +184,7 @@ export function ProfileForm() {
         </div>
       </form>
     </Form>
+    </div>
   )
 
 }

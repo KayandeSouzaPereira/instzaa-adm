@@ -36,7 +36,6 @@ export const formSchema = z.object({
   destaque: z.boolean(),
   promocao: z.boolean(),
   imagem : z.string()
-
 })
 
 export function ProfileFormEdit(formEdit:typeof formSchema) {
@@ -61,8 +60,9 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-
-    setItemCardapio(values, values.id)
+    const _values = values
+    _values.imagem = localStorage.getItem('base64') 
+    setItemCardapio(_values, values.id)
     .then(result => {alert("Edição efetuada com sucesso.");
     location.reload();
     })
@@ -70,7 +70,7 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
   }
   
   return (
-    <div>
+    <div className="h-[800px] w-[450px] p-4">
       
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-8">

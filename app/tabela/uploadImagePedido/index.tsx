@@ -7,16 +7,16 @@ const thumbsContainer = {
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
-  marginTop: 5
+  marginTop: 16
 };
 
 const thumb = {
   display: 'flex',
-  borderRadius: 30,
-  border: '0,3px solid #eaeaea',
+  borderRadius: 2,
   width: 150,
   height: 150,
-  padding: 1,
+  padding: 4,
+  boxSizing: 'border-box'
 };
 
 const thumbInner = {
@@ -36,11 +36,11 @@ const imgS = {
 
 
 
-export default function Previews({img}) {
+export default function PreviewsPedido({img}) {
   
   const [files, setFiles] = useState([]);
   const [ret, setRet] = useState("");
-  const [pedido, setPedido] = useState(false);
+  const [pedido, setPedido] = useState(true);
   const {getRootProps, getInputProps} = useDropzone({
     accept: {
       'image/*': []
@@ -105,14 +105,22 @@ export default function Previews({img}) {
   };
   
   const thumbs = files.map(file => (
-    <div rounded>
-        
+    <div>
+      {
+        pedido == false ?
+        <Button onClick={() => {
+          setFiles([]);
+        }} variant="outline" size="icon">
+          <TrashIcon className="h-4 w-4"/>
+        </Button>
+        :
+        <></>
+      }
       <div class="rounded" style={thumb} key={file.name}>
-     
+        
         <div class="rounded" style={thumbInner}>
           { file.preview?
           <img
-          class="rounded"
           src={file.preview}
           style={imgS}
           onLoad={() => { URL.revokeObjectURL(file.preview) }}
@@ -125,14 +133,8 @@ export default function Previews({img}) {
           />
 
           }
-          <Button class="absolute bottom-12 hover:bg-cyan-600 bg-zinc-950 content-center rounded h-[30px] w-[150px]" onClick={() => {
-          setFiles([]);
-        }} variant="outline" size="icon">
-            <TrashIcon className="relative left-[65px] h-6 w-6"/>
-        </Button>
-
+          
         </div>
-        
       </div>
     </div>
   ));
@@ -158,4 +160,4 @@ export default function Previews({img}) {
   );
 }
 
-<Previews />
+<PreviewsPedido />
