@@ -1,6 +1,7 @@
 "use server"
 import api from "./api"
 import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
+import { EmpresaDto } from "../tabela/formEmpresa/form";
 import { cookies } from "next/headers";
 
   function saveToken(body:any){
@@ -58,7 +59,6 @@ import { cookies } from "next/headers";
     }
 
     async function cadastroItemCardapio(body:CardapioDTO) {
-      console.log("CORPO : " + JSON.stringify(body))
       let token = cookies().get("token").value
       const config = {
         headers: {
@@ -81,7 +81,6 @@ import { cookies } from "next/headers";
 
     async function setItemCardapio(body:Cardapio, id:String) {
       let token = cookies().get("token").value
-      console.log("CORPO : " + JSON.stringify(body))
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -134,6 +133,32 @@ import { cookies } from "next/headers";
       return api.delete('pedido/' + id, config)
   }
 
+  function updateStatusPedido(id:number) {
+    let token = cookies().get("token").value
+      const config = {
+        headers: {
+          "Cache-Control": "no-cache",
+          "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }
+      };
+      return api.get('pedido/status/' + id, config)
+  }
+
+  function updateStatusCancelamentoPedido(id:number) {
+    let token = cookies().get("token").value
+      const config = {
+        headers: {
+          "Cache-Control": "no-cache",
+          "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }
+      };
+      return api.get('pedido/cancelaStatus/' + id, config)
+  }
+
   function savePedido(body:any) {
     let token = cookies().get("token").value 
       const config = {
@@ -159,12 +184,62 @@ import { cookies } from "next/headers";
       };
     try{
       let ret = await api.put('pedido/'+id, body, config)
-      console.log("updatePedido")
       return ret.data
     }catch (err: any){
       return err.response.data
     }
   }
 
+  async function getEmpresa() {
+    let token = cookies().get("token").value
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+    return api.get('empresa/', config)
+  }
 
-export { saveToken,login,getCardapio,getItemCardapio,deleteItemCardapio,cadastroItemCardapio, setItemCardapio, getPedidos, getPedidoId, deletePedido, savePedido, updatePedido}
+  async function setEmpresa(body:EmpresaDto, id: number) {
+    let token = cookies().get("token").value
+    const config = {
+      headers: {
+        "Cache-Control": "no-cache",
+        "Access-Control-Allow-Origin": "*",
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }
+    };
+    const data = JSON.stringify(body)
+    
+    try{
+      let ret = await  api.put('empresa/'+ id, data, config)
+      
+      return ret.data
+    }catch (err: any){
+      return err.response.data
+    }
+  }
+
+  function getPix() {
+    let tkk = cookies().get("token").value
+    const config = {
+      headers: { 
+        Authorization: `Bearer ${tkk}`,
+        "Cache-Control": "no-cache",
+      }
+    };
+    return api.get('pagamento/listaPagamentosPix', config) 
+  }
+
+  function getCaixa() {
+    let tkk = cookies().get("token").value
+    const config = {
+      headers: { 
+        Authorization: `Bearer ${tkk}`,
+        "Cache-Control": "no-cache",
+      }
+    };
+    return api.get('pagamento/caixa', config) 
+  }
+
+
+export { saveToken,login,getCardapio,getItemCardapio,deleteItemCardapio,cadastroItemCardapio, setItemCardapio, getPedidos, getPedidoId, deletePedido, savePedido, updatePedido, getEmpresa, setEmpresa, getCaixa, getPix, updateStatusPedido, updateStatusCancelamentoPedido}

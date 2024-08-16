@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { deleteItemCardapio, deletePedido } from "@/app/service/service"
+import { deleteItemCardapio, deletePedido, updateStatusPedido, updateStatusCancelamentoPedido } from "@/app/service/service"
 import {
   Dialog,
   DialogContent,
@@ -20,7 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Pencil2Icon } from "@radix-ui/react-icons"
+import { Pencil2Icon, DoubleArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons"
 import { ProfileFormEdit } from "../../tabela/formCardapioEdit/form"
 import { PedidoFormEdit } from "@/app/tabela/formPedidoEdit/form"
 
@@ -143,6 +143,7 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
       cell: ({ row }) => {
         const pedido = row.original
         const id = pedido.id;
+        console.log(pedido.status)
         let edit = {
           id: id,
           nomeCliente: pedido.nomeCliente,
@@ -211,6 +212,56 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
 {
   accessorKey: "valor",
   header: () => <div className="text-right">Preço</div>,
+  cell: ({ row }) => {
+    const amount = parseFloat(row.getValue("valor"))
+    const formatted = new Intl.NumberFormat("pt-Br", {
+      style: "currency",
+      currency: "BRL",
+    }).format(amount)
+
+    return <div className="text-right font-medium">{formatted}</div>
+  }},
+  {
+    accessorKey: "status",
+    header: "Status",
+  },
+  {
+    id:"ações",
+    cell: ({row}) => {
+      const pedido = row.original
+      return (<div className="flex flex-row">
+        <DoubleArrowRightIcon onClick={()=>{
+          var r = confirm("Tem Certeza que deseja atualizar o status do pedido de : " + pedido.nomeCliente  + " ? ");
+          if(r==true){updateStatusPedido(pedido.id);setInterval(function(){location.reload()},1000)};
+          }} className="h-5 w-5 mx-5"/>
+        <Cross2Icon onClick={()=>{
+          var r = confirm("Tem Certeza que deseja cancelar pedido de : " + pedido.nomeCliente  + " ? ");
+          if(r==true){updateStatusCancelamentoPedido(pedido.id);setInterval(function(){location.reload()},1000)};
+          }} className="h-5 w-5 mx-5"/>
+        </div>)
+    }
+  }
+
+]
+
+export type PagamentoPix = {
+  id: string
+  valor: string
+  data: string
+}
+
+export const columnsPix: ColumnDef<PagamentoPix>[] = [
+{
+  accessorKey: "id",
+  header: "id",
+},
+{
+  accessorKey: "data",
+  header: "Data",
+},
+{
+  accessorKey: "valor",
+  header: () => <div className="text-right">Valor</div>,
   cell: ({ row }) => {
     const amount = parseFloat(row.getValue("valor"))
     const formatted = new Intl.NumberFormat("pt-Br", {

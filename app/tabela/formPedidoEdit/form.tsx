@@ -53,6 +53,9 @@ function statusCOD(val:String) {
     case "Concluido": 
       answer = "Concluído";
       break;
+      case "Cancelado": 
+      answer = "Cancelado";
+      break;
     default:
       answer = "A Confirmar...";
   }
@@ -66,7 +69,6 @@ function data(val:number){
 }
 
 export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
-  console.log(formEdit.formEdit.resumoPedido);
   const pedidos = formEdit.formEdit.resumoPedido;
   const form = useForm<z.infer<typeof formSchemaPedido>>({
     
@@ -103,7 +105,6 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
   );
 
   function onSubmit(values: z.infer<typeof formSchemaPedido>) {
-    console.log(values);
     updatePedido(values, values.id)
     .then(result => {alert("Edição efetuada com sucesso.");
     location.reload();

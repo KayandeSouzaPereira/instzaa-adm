@@ -54,7 +54,6 @@ export default function Previews({img}) {
 
   useEffect(() => {
     if(img.value){
-      console.log(img.value)
       const imgs = [img]
       setFiles(imgs);
     }
