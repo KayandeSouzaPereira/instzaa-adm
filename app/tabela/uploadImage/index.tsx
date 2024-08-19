@@ -57,7 +57,7 @@ export default function Previews({img}) {
       const imgs = [img]
       setFiles(imgs);
     }
-    if(img && img.value == undefined){
+    if(img && img.value == undefined && img.name != "imagem"){
       setPedido(true);
       let ig = {
         name: "capa",
@@ -72,10 +72,9 @@ export default function Previews({img}) {
     img = ret;
   },[ret])
 
-  useEffect(() => {
-  },[pedido])
 
   useEffect(() => {
+    if(files[0] != undefined){
     const bs64 = convertToBase64(files[0]);
     if (bs64 != undefined){
       bs64.then(
@@ -85,7 +84,7 @@ export default function Previews({img}) {
         function (reason) {
         },)
       
-    }
+    }}
   },[files])
 
   function convertToBase64 (file) {
@@ -105,9 +104,7 @@ export default function Previews({img}) {
   
   const thumbs = files.map(file => (
     <div rounded>
-        
       <div class="rounded" style={thumb} key={file.name}>
-     
         <div class="rounded" style={thumbInner}>
           { file.preview?
           <img
@@ -124,12 +121,7 @@ export default function Previews({img}) {
           />
 
           }
-          <Button class="absolute bottom-12 hover:bg-cyan-600 bg-zinc-950 content-center rounded h-[30px] w-[150px]" onClick={() => {
-          setFiles([]);
-        }} variant="outline" size="icon">
-            <TrashIcon className="relative left-[65px] h-6 w-6"/>
-        </Button>
-
+          <Button class="absolute bottom-12 hover:bg-cyan-600 bg-zinc-950 content-center rounded h-[30px] w-[150px]" onClick={() => {setFiles([]);}} variant="outline" size="icon"><TrashIcon className="relative left-[65px] h-6 w-6"/></Button>
         </div>
         
       </div>

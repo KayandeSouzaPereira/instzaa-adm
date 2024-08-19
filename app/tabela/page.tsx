@@ -59,8 +59,6 @@ async function getData5(): Promise<any[]> {
       pagamento.valor = obj.valor.original
       ret.push(pagamento);
     })
-
-    console.log(ret)
     return ret;
   })
   .catch(error => {return Promise.reject(error);})

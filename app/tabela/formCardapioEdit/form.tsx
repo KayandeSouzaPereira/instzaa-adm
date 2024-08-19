@@ -40,6 +40,10 @@ export const formSchema = z.object({
 
 export function ProfileFormEdit(formEdit:typeof formSchema) {
 
+  if(formEdit.formEdit.imagem === null){
+    formEdit.formEdit.imagem = "";
+  }
+
   const form = useForm<z.infer<typeof formSchema>>({
     
 
@@ -59,9 +63,13 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
 
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const _values = values
-    _values.imagem = localStorage.getItem('base64') 
+    const bs64 = await localStorage.getItem('base64');
+    if (bs64 != undefined && bs64 != null){
+      _values.imagem = bs64;
+    }
+    
     setItemCardapio(_values, values.id)
     .then(result => {alert("Edição efetuada com sucesso.");
     location.reload();
