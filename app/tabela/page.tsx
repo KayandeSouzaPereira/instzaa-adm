@@ -85,9 +85,13 @@ export default async function Dashboard() {
         <TabsTrigger value="Cardapio">Cardapio</TabsTrigger>
         <TabsTrigger value="Pedidos">Pedidos</TabsTrigger>
         <div className="w-full"/>
+        {
+          data3 != undefined ?
         <div className="mx-4">Olá {data3.nomeEmpresa}.</div>
-        <AvatarComp empresa={data3}/>
-          
+        :
+        <div className="mx-4">Bem vindo.</div>
+        }
+          <AvatarComp empresa={data3}/>
         </TabsList>
         <TabsContent value="Caixa">
           <div className="w-[1200px] h-[700px] bg-slate-900 ">

@@ -51,7 +51,9 @@ export function Loginform() {
         alert("Usuário ou Senha estão incorretos.");
       }else{
         alert("Login efetuado com sucesso.");
+        console.log(result)
         setCookie("token", result.token)
+        setCookie("cargo", result.cargo)
         document.location.href = "/dashboard";
       }})
     .catch(error => { alert("Ocorreu um erro no login: " + error); });

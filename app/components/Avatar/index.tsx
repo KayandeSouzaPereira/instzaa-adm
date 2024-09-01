@@ -14,6 +14,9 @@ import {
 export default function AvatarComp(empresaa: EmpresaDto) {
   
     return (
+        <div>
+        {
+        empresaa.empresa != undefined ?
         <Dialog>
               <DialogTrigger>
                 <Avatar className="w-8 h-8 mh-3">
@@ -31,8 +34,13 @@ export default function AvatarComp(empresaa: EmpresaDto) {
                   </DialogHeader>
               </DialogContent>
             </Dialog>
-
-
-
+            :
+            <Avatar className="w-8 h-8 mh-3">
+                  <MoreHorizontal className="h-4 w-4" />
+                  <AvatarImage src={img.src} />
+                  <AvatarFallback>ID</AvatarFallback>
+            </Avatar>
+        }
+      </div>
     )
 }

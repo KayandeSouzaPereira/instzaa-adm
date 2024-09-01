@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {setEmpresa, getEmpresa} from '../../service/service'
+import {setEmpresa} from '../../service/service'
 
 
 export type EmpresaDto = {

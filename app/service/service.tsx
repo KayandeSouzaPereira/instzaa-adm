@@ -192,10 +192,17 @@ import { cookies } from "next/headers";
 
   async function getEmpresa() {
     let token = cookies().get("token").value
+    let cargo = cookies().get("cargo").value
+
+    if(cargo.includes("Admin")){
+
     const config = {
       headers: { Authorization: `Bearer ${token}` }
     };
     return api.get('empresa/', config)
+    } else {
+      return {data: undefined};
+    }
   }
 
   async function setEmpresa(body:EmpresaDto, id: number) {
