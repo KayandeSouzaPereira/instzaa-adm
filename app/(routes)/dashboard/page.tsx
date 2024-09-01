@@ -1,7 +1,7 @@
+
 import "../../globals.css"
 import Dashboard from "../../tabela/page"
 import { ThemeProvider } from "@/components/theme-provider"
-
 
 export default function DashboardPage() {
     

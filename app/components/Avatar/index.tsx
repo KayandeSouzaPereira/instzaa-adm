@@ -1,3 +1,5 @@
+'use client'
+import { useEffect } from "react"
 import { MoreHorizontal } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import img from '../../../src/image/pizza.jpg'
@@ -10,14 +12,32 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { Toaster, toast } from 'sonner'
 
-export default function AvatarComp(empresaa: EmpresaDto) {
+ function checkContPedidos () {
+    toast("Um novo pedido foi realizado !", {
+      action: {
+        label: "Atualizar pagina",
+        onClick: () => location.reload(),
+      },
+    })
+} 
+
+export default function AvatarComp(empresaa: EmpresaDto, check: boolean) {
+
+  useEffect(() => {
+    if (check == true){
+      checkContPedidos();
+    }
+    
+  },[check])
   
     return (
         <div>
         {
         empresaa.empresa != undefined ?
         <Dialog>
+              <Toaster position="bottom-center" />
               <DialogTrigger>
                 <Avatar className="w-8 h-8 mh-3">
                   <MoreHorizontal className="h-4 w-4" />
@@ -36,6 +56,7 @@ export default function AvatarComp(empresaa: EmpresaDto) {
             </Dialog>
             :
             <Avatar className="w-8 h-8 mh-3">
+              <Toaster position="bottom-center" />
                   <MoreHorizontal className="h-4 w-4" />
                   <AvatarImage src={img.src} />
                   <AvatarFallback>ID</AvatarFallback>

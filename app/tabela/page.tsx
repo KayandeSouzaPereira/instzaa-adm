@@ -2,11 +2,11 @@
 import { columns, Cardapio, Pedido, columnsPedido, columnsPix, PagamentoPix } from "../components/columns"
 import { DataTable } from "./formCardapio/data-table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {useFormatter} from 'next-intl';
-import { getCardapio, getPedidos, getEmpresa, getCaixa, getPix } from "../service/service";
+import { Toaster, toast } from "sonner";
+import { getCardapio, getPedidos, getEmpresa, getCaixa, getPix, getContagemPedido } from "../service/service";
 import { EmpresaDto } from "./formEmpresa/form";
 import { params } from "../components/token";
-import AvatarComp from "../components/Avatar";
+import AvatarComp, {checkContPedidos} from "../components/Avatar";
 
 import {
   Card,
@@ -40,8 +40,6 @@ async function getData3(): Promise<EmpresaDto[]> {
 async function getData4(): Promise<any[]> {
   return getCaixa()
   .then(result => {
-
-    
     return result.data
   })
   .catch(error => {return Promise.reject(error);})
@@ -64,7 +62,13 @@ async function getData5(): Promise<any[]> {
   .catch(error => {return Promise.reject(error);})
 }
 
-
+async function getData6(): Promise<any[]> {
+  return getContagemPedido()
+  .then(result => {
+    return result.data
+  })
+  .catch(error => {return Promise.reject(error);})
+}
 
 
 
@@ -75,10 +79,25 @@ export default async function Dashboard() {
   const data3: EmpresaDto[] = await getData3();
   const data4: any[] = await getData4();
   const data5: any[] = await getData5();
+  let data6: any[] = await getData6();
 
+  let check = false;
+  
+  const checkCont = async () => {
+    const _data: any[] = await getData6();
+    if (_data > data6){
+      check = true;
+    }else {
+      check = false;
+    }
+  }
+  
+  
+  const timer = setInterval(checkCont, 3000);
 
   return (
     <div className="container w-full">
+         
         <Tabs defaultValue="Caixa" className="w-[1200px]">
         <TabsList className="w-full h-[50px] items-center" >
         <TabsTrigger value="Caixa">Caixa</TabsTrigger>
@@ -91,7 +110,7 @@ export default async function Dashboard() {
         :
         <div className="mx-4">Bem vindo.</div>
         }
-          <AvatarComp empresa={data3}/>
+          <AvatarComp empresa={data3} check={check}/>
         </TabsList>
         <TabsContent value="Caixa">
           <div className="w-[1200px] h-[700px] bg-slate-900 ">
@@ -132,7 +151,7 @@ export default async function Dashboard() {
          <TabsContent  value="Pedidos">
          <DataTable columns={columnsPedido} data={data2} />
         </TabsContent>
-        
+         
         </Tabs>
     </div>
   )
