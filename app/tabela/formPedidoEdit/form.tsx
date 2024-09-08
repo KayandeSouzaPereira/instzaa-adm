@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { StarFilledIcon, StarIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
 import { Form,FormControl,FormDescription,FormField, FormItem,FormLabel,FormMessage} from "@/components/ui/form"
@@ -10,7 +11,7 @@ import { Card, CardFooter, CardHeader, CardTitle, CardDescription } from "@/comp
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import {updatePedido} from '../../service/service'
+import {updatePedido, getAvaliacao} from '../../service/service'
 import PreviewsPedido from "../uploadImagePedido"
 
 
@@ -68,8 +69,25 @@ function data(val:number){
   return a.toLocaleString();
 }
 
+function reviewPedido(id){
+  console.log(id)
+  return getAvaliacao(id).then(res => {
+    return res.data.avaliacao
+  })
+  .catch(err =>
+    {console.log("ERRO", err)}
+  )
+}
+
 export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
   const pedidos = formEdit.formEdit.resumoPedido;
+  let avaliacao = 4
+
+  if(formEdit.formEdit.status.includes("Concluido")){
+    
+    //avaliacao = reviewPedido(formEdit.formEdit.id)
+  }
+  
   const form = useForm<z.infer<typeof formSchemaPedido>>({
     
 
@@ -247,6 +265,46 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
           </div>
           
         </form>
+        <div>
+        {formEdit.formEdit.status.includes("Concluido")?
+        <div>
+          Avaliação do Pedido pelo Cliente
+         <div className="flex flex-row my-2">
+          {
+            avaliacao > 0?
+            <StarFilledIcon/>
+            :
+            <StarIcon/>
+          }
+           {
+            avaliacao > 1?
+            <StarFilledIcon/>
+            :
+            <StarIcon/>
+          }
+           {
+            avaliacao > 2?
+            <StarFilledIcon/>
+            :
+            <StarIcon/>
+          }
+           {
+            avaliacao > 3?
+            <StarFilledIcon/>
+            :
+            <StarIcon/>
+          }
+           {
+            avaliacao > 4?
+            <StarFilledIcon/>
+            :
+            <StarIcon/>
+          }
+         </div></div>
+         :
+         <></> 
+        }
+        </div>
       </Form>
      
     </ScrollArea>

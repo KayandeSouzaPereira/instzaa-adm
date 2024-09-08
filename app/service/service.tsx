@@ -259,5 +259,16 @@ import { cookies } from "next/headers";
     return api.get('pedido/contagem', config) 
   }
 
+  function getAvaliacao(id) {
+    let tkk = cookies().get("token").value
+    const config = {
+      headers: { 
+        Authorization: `Bearer ${tkk}`,
+        "Cache-Control": "no-cache",
+      }
+    };
+    return api.get('avaliacao/' + id, config) 
+  }
 
-export { saveToken,login,getCardapio,getItemCardapio,deleteItemCardapio,cadastroItemCardapio, setItemCardapio, getPedidos, getPedidoId, deletePedido, savePedido, updatePedido, getEmpresa, setEmpresa, getCaixa, getPix, updateStatusPedido, updateStatusCancelamentoPedido, getContagemPedido}
+
+export { saveToken,login,getCardapio,getItemCardapio,deleteItemCardapio,cadastroItemCardapio, setItemCardapio, getPedidos, getPedidoId, deletePedido, savePedido, updatePedido, getEmpresa, setEmpresa, getCaixa, getPix, updateStatusPedido, updateStatusCancelamentoPedido, getContagemPedido, getAvaliacao}
