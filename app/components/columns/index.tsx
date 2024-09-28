@@ -23,6 +23,7 @@ import {
 import { Pencil2Icon, DoubleArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons"
 import { ProfileFormEdit } from "../../tabela/formCardapioEdit/form"
 import { PedidoFormEdit } from "@/app/tabela/formPedidoEdit/form"
+import { getAvaliacao } from "@/app/service/service"
 
 export type Cardapio = {
     id: string
@@ -156,7 +157,7 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
         }
 
         let resumo = pedido.resumoPedido
-
+        let avaliacao = 0
    
         return (
           <Dialog>
@@ -167,7 +168,7 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
                 <DialogHeader>
                 <DialogTitle>Edite o pedido </DialogTitle>
                 <DialogDescription>
-                < PedidoFormEdit formEdit={edit}/>    
+                < PedidoFormEdit formEdit={edit} avaliacao={avaliacao}/>    
                 </DialogDescription>
                 </DialogHeader>
             </DialogContent>

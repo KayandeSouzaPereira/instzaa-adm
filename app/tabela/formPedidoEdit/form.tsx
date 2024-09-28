@@ -69,24 +69,11 @@ function data(val:number){
   return a.toLocaleString();
 }
 
-function reviewPedido(id){
-  console.log(id)
-  return getAvaliacao(id).then(res => {
-    return res.data.avaliacao
-  })
-  .catch(err =>
-    {console.log("ERRO", err)}
-  )
-}
 
-export function PedidoFormEdit(formEdit:typeof formSchemaPedido) {
+export function PedidoFormEdit(formEdit:typeof formSchemaPedido, avaliacao:number) {
   const pedidos = formEdit.formEdit.resumoPedido;
-  let avaliacao = 4
-
-  if(formEdit.formEdit.status.includes("Concluido")){
-    
-    //avaliacao = reviewPedido(formEdit.formEdit.id)
-  }
+  console.log("Avaliacao:", avaliacao)
+ 
   
   const form = useForm<z.infer<typeof formSchemaPedido>>({
     

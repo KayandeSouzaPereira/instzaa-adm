@@ -73,6 +73,7 @@ async function getData6(): Promise<any[]> {
 
 
 
+
 export default async function Dashboard() {
   const data: Cardapio[] = await getData();
   const data2: Pedido[] = await getData2();
