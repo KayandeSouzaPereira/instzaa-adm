@@ -33,7 +33,7 @@ async function getData2(): Promise<Pedido[]> {
 
 async function getData3(): Promise<EmpresaDto[]> {
     return getEmpresa()
-    .then(result => {return result.data;})
+    .then(result => {console.log(result.data);return result.data;})
     .catch(error => {return Promise.reject(error);})
 }
 
@@ -114,29 +114,21 @@ export default async function Dashboard() {
           <AvatarComp empresa={data3} check={check}/>
         </TabsList>
         <TabsContent value="Caixa">
-          <div className="w-[1200px] h-[700px] bg-slate-900 ">
+          <div className="w-[1200px] h-[1000px] bg-slate-900 ">
             <div className="flex flex-row">
-                <div className="w-[380px] h-[150px] bg-slate-900 mx-2 py-5">
-                  <Card className="w-[360px] h-[140px] bg-slate-700 mx-2">
+                <div className="w-[580px] h-[150px] bg-slate-900 mx-2 py-5">
+                  <Card className="w-[580px] h-[140px] bg-slate-700 mx-2">
                     <CardHeader>
                       <CardTitle>Caixa</CardTitle>
                       <CardDescription className="text-lg">{new Intl.NumberFormat("pt-Br", {style: "currency",currency: "BRL",}).format(data4.saldo)}</CardDescription>
                     </CardHeader>
                   </Card>
                 </div>
-                <div className="w-[380px] h-[150px] bg-slate-900 mx-2 py-5">
-                  <Card className="w-[360px] h-[140px] bg-slate-700 mx-2">
+                <div className="w-[580px] h-[150px] bg-slate-900 mx-2 py-5">
+                  <Card className="w-[580px] h-[140px] bg-slate-700 mx-2">
                     <CardHeader>
                       <CardTitle>Pedidos do dia :</CardTitle>
                       <CardDescription className="text-lg">{data5.length}</CardDescription>
-                    </CardHeader>
-                  </Card>
-                </div>
-                <div className="w-[380px] h-[150px] bg-slate-900 mx-2 py-5">
-                  <Card className="w-[360px] h-[140px] bg-slate-700 mx-2">
-                    <CardHeader className="flex">
-                      <CardTitle>Caixa :</CardTitle>
-                      <CardDescription className="text-lg">{new Intl.NumberFormat("pt-Br", {style: "currency",currency: "BRL",}).format(data4.saldo)}</CardDescription>
                     </CardHeader>
                   </Card>
                 </div>

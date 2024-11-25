@@ -143,6 +143,7 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
       id: "ações",
       cell: ({ row }) => {
         const pedido = row.original
+        console.log(pedido)
         const id = pedido.id;
         let edit = {
           id: id,
@@ -153,7 +154,8 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
           valor: pedido.valor,
           status: pedido.status,
           resumoPedido: pedido.resumoPedido,
-          cpf: pedido.cpf
+          cpf: pedido.cpf,
+          avaliacao: pedido.nota
         }
 
         let resumo = pedido.resumoPedido

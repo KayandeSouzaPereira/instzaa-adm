@@ -72,7 +72,7 @@ function data(val:number){
 
 export function PedidoFormEdit(formEdit:typeof formSchemaPedido, avaliacao:number) {
   const pedidos = formEdit.formEdit.resumoPedido;
-  console.log("Avaliacao:", avaliacao)
+  const _avaliacao = formEdit.formEdit.avaliacao;
  
   
   const form = useForm<z.infer<typeof formSchemaPedido>>({
@@ -258,31 +258,31 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido, avaliacao:numbe
           Avaliação do Pedido pelo Cliente
          <div className="flex flex-row my-2">
           {
-            avaliacao > 0?
+            _avaliacao > 0?
             <StarFilledIcon/>
             :
             <StarIcon/>
           }
            {
-            avaliacao > 1?
+            _avaliacao > 1?
             <StarFilledIcon/>
             :
             <StarIcon/>
           }
            {
-            avaliacao > 2?
+            _avaliacao > 2?
             <StarFilledIcon/>
             :
             <StarIcon/>
           }
            {
-            avaliacao > 3?
+            _avaliacao > 3?
             <StarFilledIcon/>
             :
             <StarIcon/>
           }
            {
-            avaliacao > 4?
+            _avaliacao > 4?
             <StarFilledIcon/>
             :
             <StarIcon/>

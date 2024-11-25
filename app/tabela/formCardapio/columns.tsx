@@ -61,6 +61,7 @@ export type Pedido = {
     valor: String
     status: null
     numeroContato: number
+    avaliacao: number
   }
 
 
@@ -176,7 +177,7 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
         cell: ({ row }) => {
           const pedido = row.original
           const status = pedido.status
-
+          console.log(pedido)
 
           let edit = {
             id: pedido.id,
@@ -187,7 +188,8 @@ export const columnsPedido: ColumnDef<Pedido>[] = [
             numeroContato: pedido.numeroContato,
             valor: pedido.valor,
             resumoPedido: "",
-            status : status
+            status : status,
+            avaliacao: pedido.nota
           }
      
           return (
