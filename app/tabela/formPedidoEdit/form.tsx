@@ -95,7 +95,7 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido, avaliacao:numbe
 
   })
 
-  const pedidoList = pedidos.map(pedido =>
+  const pedidoList = pedidos.map((pedido:any) => (
     <div className="p-6">
       <Card>
         <CardHeader>
@@ -107,7 +107,7 @@ export function PedidoFormEdit(formEdit:typeof formSchemaPedido, avaliacao:numbe
         </CardFooter>
       </Card>
     </div>
-  );
+  ));
 
   function onSubmit(values: z.infer<typeof formSchemaPedido>) {
     updatePedido(values, values.id)
