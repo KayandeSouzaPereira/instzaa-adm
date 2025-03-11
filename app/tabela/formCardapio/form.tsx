@@ -33,6 +33,7 @@ const formSchema = z.object({
   categoria: z.string(),
   destaque: z.boolean(),
   promocao: z.boolean(),
+  itemLanche: z.boolean(),
   imagem : z.string()
 })
 
@@ -47,12 +48,15 @@ export function ProfileForm() {
       categoria: "Outros",
       destaque: false,
       promocao: false,
+      itemLanche: false,
       imagem: ""
     },
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const _values = values
+    console.log("VALUES")
+    console.log(_values)
     _values.imagem = localStorage.getItem('base64') 
     cadastroItemCardapio(_values)
     .then(result => {alert("Cadastro efetuado com sucesso."); document.location.href = "/dashboard/";})
@@ -60,7 +64,7 @@ export function ProfileForm() {
   }
   
   return (
-  <div className="h-[800px] w-[450px] p-4">
+  <div className="h-[1000px] w-[450px] p-4">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-8">
         <FormField
@@ -163,22 +167,43 @@ export function ProfileForm() {
                 )}
                 />
                </div>
-               <div className="flex flex-col w-50 h-40">
+               <div className="flex flex-col w-35 h-35">
                 <FormField
                 control={form.control}
-                name="imagem"
+                name="itemLanche"
                 render={({ field }) => (
                     <FormItem>
-                    <FormLabel>Imagem do Item</FormLabel>
+                    <FormLabel>Componente de lanche</FormLabel>
+                    <div className="space-y-0.5"/>
                     <FormControl>
-                        <Previews img={field}/>
+                        <Switch checked={field.value}
+                            onCheckedChange={field.onChange} />
                     </FormControl>
                     <FormMessage />
                     </FormItem>
                 )}
                 />
-                </div>
-        </div>
+                
+               </div>
+               </div>
+                              <div className="flex flex-row space-x-10"></div>
+                               <div className="flex flex-col w-50 h-30">
+                                 <FormField
+                                 control={form.control}
+                                 name="imagem"
+                                 render={({ field }) => (
+                                     <FormItem>
+                                     <FormLabel>Imagem do Item</FormLabel>
+                                     <div className="flex flex-row space-x-3"></div>
+                                     <FormControl>
+                                         <Previews img={field}/>
+                                     </FormControl>
+                                     <FormMessage />
+                                     </FormItem>
+                                 )}
+                                 />
+                                 </div>
+                                 <div className="flex flex-row space-x-10"></div>
         <div className="">
             <Button type="submit">Enviar</Button>
         </div>

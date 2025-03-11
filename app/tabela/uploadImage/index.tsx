@@ -121,7 +121,7 @@ export default function Previews({img}) {
           />
 
           }
-          <Button class="absolute bottom-12 hover:bg-cyan-600 bg-zinc-950 content-center rounded h-[30px] w-[150px]" onClick={() => {setFiles([]);}} variant="outline" size="icon"><TrashIcon className="relative left-[65px] h-6 w-6"/></Button>
+          <Button class="absolute bottom-17 hover:bg-cyan-600 bg-zinc-950 content-center rounded h-[30px] w-[150px]" onClick={() => {setFiles([]);}} variant="outline" size="icon"><TrashIcon className="relative left-[65px] h-6 w-6"/></Button>
         </div>
         
       </div>

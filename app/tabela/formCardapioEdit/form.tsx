@@ -35,6 +35,7 @@ export const formSchema = z.object({
   categoria: z.string(),
   destaque: z.boolean(),
   promocao: z.boolean(),
+  itemLanche: z.boolean(),
   imagem : z.string()
 })
 
@@ -44,9 +45,9 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
     formEdit.formEdit.imagem = "";
   }
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    
+  console.log("ITEM:", formEdit.formEdit)
 
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
 
     defaultValues: {
@@ -57,9 +58,9 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
       categoria: formEdit.formEdit.categoria,
       destaque: formEdit.formEdit.destaque,
       promocao: formEdit.formEdit.promocao,
-      imagem: formEdit.formEdit.imagem
+      itemLanche: formEdit.formEdit.itemLanche,
+      imagem: formEdit.formEdit.imagem,
     },
-
 
   })
 
@@ -78,7 +79,7 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
   }
   
   return (
-    <div className="h-[800px] w-[450px] p-4">
+    <div className="h-[1000px] w-[450px] p-4">
       
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 py-8">
@@ -195,13 +196,34 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
                   )}
                   />
                 </div>
-                <div className="flex flex-col w-50 h-40">
+                <div className="flex flex-col w-35 h-35">
+                <FormField
+                control={form.control}
+                name="itemLanche"
+                render={({ field }) => (
+                    <FormItem>
+                    <FormLabel>Componente de lanche</FormLabel>
+                    <div className="space-y-0.5"/>
+                    <FormControl>
+                        <Switch checked={field.value}
+                            onCheckedChange={field.onChange} />
+                    </FormControl>
+                    <FormMessage />
+                    </FormItem>
+                )}
+                />
+                
+               </div>
+               </div>
+               <div className="flex flex-row space-x-10"></div>
+                <div className="flex flex-col w-50 h-30">
                   <FormField
                   control={form.control}
                   name="imagem"
                   render={({ field }) => (
                       <FormItem>
                       <FormLabel>Imagem do Item</FormLabel>
+                      <div className="flex flex-row space-x-3"></div>
                       <FormControl>
                           <Previews img={field}/>
                       </FormControl>
@@ -210,7 +232,8 @@ export function ProfileFormEdit(formEdit:typeof formSchema) {
                   )}
                   />
                   </div>
-          </div>
+                  <div className="flex flex-row space-x-10"></div>
+          
           <div className="">
               <Button type="submit">Enviar</Button>
           </div>
