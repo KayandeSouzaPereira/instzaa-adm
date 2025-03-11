@@ -71,7 +71,7 @@ import { cookies } from "next/headers";
       const data = JSON.stringify(body)
       
       try{
-        let ret = await  api.post('cardapio', data, config)
+        let ret = await api.post('cardapio', data, config)
         
         return ret.data
       }catch (err: any){

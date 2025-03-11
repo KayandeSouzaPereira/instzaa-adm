@@ -34,6 +34,7 @@ export type Cardapio = {
     categoria: string
     destaque: boolean
     promocao: boolean
+    itemLanche: boolean
   }
 
 
@@ -47,6 +48,7 @@ export const columns: ColumnDef<Cardapio>[] = [
           const id = cardapio.id;
           const destaque = cardapio.destaque
           const promocao = cardapio.promocao
+          const itemLanche = cardapio.itemLanche
 
 
           let edit = {
@@ -57,6 +59,7 @@ export const columns: ColumnDef<Cardapio>[] = [
             categoria: cardapio.categoria,
             destaque: destaque,
             promocao: promocao,
+            itemLanche: itemLanche,
             imagem : cardapio.imagem
           }
      
