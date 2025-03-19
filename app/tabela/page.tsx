@@ -78,8 +78,8 @@ export default async function Dashboard() {
   const data: Cardapio[] = await getData();
   const data2: Pedido[] = await getData2();
   const data3: EmpresaDto[] = await getData3();
-  //const data4: any[] = await getData4();
-  //const data5: any[] = await getData5();
+  const data4: any[] = await getData4();
+  const data5: any[] = await getData5();
   let data6: any[] = await getData6();
 
   let check = false;
@@ -120,7 +120,7 @@ export default async function Dashboard() {
                   <Card className="w-[580px] h-[140px] bg-slate-700 mx-2">
                     <CardHeader>
                       <CardTitle>Caixa</CardTitle>
-                      {/*<CardDescription className="text-lg">{new Intl.NumberFormat("pt-Br", {style: "currency",currency: "BRL",}).format(data4.saldo)}</CardDescription> */}
+                      <CardDescription className="text-lg">{new Intl.NumberFormat("pt-Br", {style: "currency",currency: "BRL",}).format(data4.saldo)}</CardDescription> 
                     </CardHeader>
                   </Card>
                 </div>
@@ -128,13 +128,13 @@ export default async function Dashboard() {
                   <Card className="w-[580px] h-[140px] bg-slate-700 mx-2">
                     <CardHeader>
                       <CardTitle>Pedidos do dia :</CardTitle>
-                      {/* <CardDescription className="text-lg">{data5.length}</CardDescription> */}
+                       <CardDescription className="text-lg">{data5.length}</CardDescription> 
                     </CardHeader>
                   </Card>
                 </div>
               </div>
               <div className="w-[1150px] of mt-5 mx-5 content-center flex">
-                {/*<DataTable columns={columnsPix} data={data5} /> */}
+                <DataTable columns={columnsPix} data={data5} /> 
               </div>
           </div>
         </TabsContent>
