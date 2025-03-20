@@ -1,6 +1,6 @@
 {
-  rules: {
-    'react/jsx-key': [1, { checkFragmentShorthand: true }]
+  "rules": {
+    "react/jsx-key": [1, { "checkFragmentShorthand": true }]
   },
-  "extends": "next/core-web-vitals",
+  "extends": "next/core-web-vitals"
 }
