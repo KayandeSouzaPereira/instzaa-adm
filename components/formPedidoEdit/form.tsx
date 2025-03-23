@@ -11,7 +11,7 @@ import { Card, CardFooter, CardHeader, CardTitle, CardDescription } from "@/comp
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import {updatePedido, getAvaliacao} from '../../service/service'
+import {updatePedido} from '../service/service'
 import PreviewsPedido from "../uploadImagePedido"
 
 

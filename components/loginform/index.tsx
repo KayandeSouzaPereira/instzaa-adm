@@ -17,9 +17,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-import { login } from '../../service/service'
-import { paramSave } from "../token"
-import { getCookie, setCookie } from 'cookies-next'
+import { login } from '../service/service'
+import { setCookie } from 'cookies-next'
 
 const formSchema = z.object({
     email: z.string().min(4, {message: "O usuário precisa ter mais de 4 caracteries."}),

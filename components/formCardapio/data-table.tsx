@@ -44,7 +44,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { PlusIcon } from "@radix-ui/react-icons"
 
-import { ProfileForm } from '../formCardapio/form'
+import { ProfileForm } from './form'
 import { Input } from "@/components/ui/input"
 
 interface DataTableProps<TData, TValue> {

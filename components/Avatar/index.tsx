@@ -2,8 +2,8 @@
 import { useEffect } from "react"
 import { MoreHorizontal } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import img from '../../../src/image/pizza.jpg'
-import { EmpresaForm, EmpresaDto } from "@/app/tabela/formEmpresa/form"
+import img from "../../src/image/pizza.jpg"
+import { EmpresaForm, EmpresaDto } from "../formEmpresa/form"
 import {
   Dialog,
   DialogContent,
@@ -35,7 +35,7 @@ export default function AvatarComp(empresaa: EmpresaDto, check: boolean) {
     return (
         <div>
         {
-        empresaa.empresa != undefined ?
+        empresaa.nomeEmpresa != undefined ?
         <Dialog>
               <Toaster position="bottom-center" />
               <DialogTrigger>

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
-import {cadastroItemCardapio} from '../../service/service'
+import {cadastroItemCardapio} from '../service/service'
 
 
 import Previews from '../uploadImage/index'
@@ -57,7 +57,7 @@ export function ProfileForm() {
     const _values = values
     console.log("VALUES")
     console.log(_values)
-    _values.imagem = localStorage.getItem('base64') 
+    _values.imagem = localStorage.getItem('base64');
     cadastroItemCardapio(_values)
     .then(result => {alert("Cadastro efetuado com sucesso."); document.location.href = "/dashboard/";})
     .catch(error => { alert("Ocorreu um erro no cadastro."); });

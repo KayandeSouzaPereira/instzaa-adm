@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {setEmpresa} from '../../service/service'
+import {setEmpresa} from '../service/service'
 
 
 export type EmpresaDto = {
@@ -39,7 +39,7 @@ const formSchema = z.object({
 
 export function EmpresaForm(empresa:EmpresaDto) {
 
-  const _empresa = empresa.empresa.empresa;
+  const _empresa = empresa;
   
 
   const id = 1;

@@ -2,13 +2,13 @@
 import api from "./api"
 import { Cardapio, Pedido } from "../tabela/formCardapio/columns";
 import { EmpresaDto } from "../tabela/formEmpresa/form";
-import { cookies } from "next/headers";
+import { cookies, type UnsafeUnwrappedCookies } from "next/headers";
 
   function saveToken(body:any){
      api.post("auth/login", body).then(
       result => { 
         const oneDay = 24 * 60 * 60 * 1000
-       cookies().set('token', result.data.token, { expires: Date.now() - oneDay })
+       (cookies() as unknown as UnsafeUnwrappedCookies).set('token', result.data.token, { expires: Date.now() - oneDay })
     }).catch(err => {console.log("error")});
    
       
@@ -26,7 +26,7 @@ import { cookies } from "next/headers";
   }
 
   function getCardapio(token:String) {
-    let tkk = cookies().get("token").value
+    let tkk = (cookies() as unknown as UnsafeUnwrappedCookies).get("token").value
     const config = {
       headers: { 
         Authorization: `Bearer ${tkk}`,
@@ -45,7 +45,7 @@ import { cookies } from "next/headers";
     }
 
     function deleteItemCardapio(id:string) {
-      let token = cookies().get("token").value
+      let token = (cookies() as unknown as UnsafeUnwrappedCookies).get("token").value
       const config = {
         headers: { 
         Authorization: `Bearer ${token}`,
@@ -59,7 +59,7 @@ import { cookies } from "next/headers";
     }
 
     async function cadastroItemCardapio(body:CardapioDTO) {
-      let token = cookies().get("token").value
+      let token = (await cookies()).get("token").value
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -80,7 +80,7 @@ import { cookies } from "next/headers";
     }
 
     async function setItemCardapio(body:Cardapio, id:String) {
-      let token = cookies().get("token").value
+      let token = (await cookies()).get("token").value
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -104,7 +104,7 @@ import { cookies } from "next/headers";
  
   
   function getPedidos(token:String): Promise<Pedido[]> {
-    let tkk = cookies().get("token").value
+    let tkk = (cookies() as unknown as UnsafeUnwrappedCookies).get("token").value
     const config = {
       headers: { Authorization: `Bearer ${tkk}` }
     };
@@ -121,7 +121,7 @@ import { cookies } from "next/headers";
   }
 
   function deletePedido(id:number) {
-    let token = cookies().get("token").value
+    let token = (cookies() as unknown as UnsafeUnwrappedCookies).get("token").value
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -134,7 +134,7 @@ import { cookies } from "next/headers";
   }
 
   function updateStatusPedido(id:number) {
-    let token = cookies().get("token").value
+    let token = (cookies() as unknown as UnsafeUnwrappedCookies).get("token").value
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -147,7 +147,7 @@ import { cookies } from "next/headers";
   }
 
   function updateStatusCancelamentoPedido(id:number) {
-    let token = cookies().get("token").value
+    let token = (cookies() as unknown as UnsafeUnwrappedCookies).get("token").value
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -160,7 +160,7 @@ import { cookies } from "next/headers";
   }
 
   function savePedido(body:any) {
-    let token = cookies().get("token").value 
+    let token = (cookies() as unknown as UnsafeUnwrappedCookies).get("token").value 
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -173,7 +173,7 @@ import { cookies } from "next/headers";
   }
 
   async function updatePedido(body:any, id) {
-    let token = cookies().get("token").value
+    let token = (await cookies()).get("token").value
       const config = {
         headers: {
           "Cache-Control": "no-cache",
@@ -191,8 +191,8 @@ import { cookies } from "next/headers";
   }
 
   async function getEmpresa() {
-    let token = cookies().get("token").value
-    let cargo = cookies().get("cargo").value
+    let token = (await cookies()).get("token").value
+    let cargo = (await cookies()).get("cargo").value
 
     if(cargo.includes("Admin")){
 
@@ -206,7 +206,7 @@ import { cookies } from "next/headers";
   }
 
   async function setEmpresa(body:EmpresaDto, id: number) {
-    let token = cookies().get("token").value
+    let token = (await cookies()).get("token").value
     const config = {
       headers: {
         "Cache-Control": "no-cache",
@@ -227,7 +227,7 @@ import { cookies } from "next/headers";
   }
 
   function getPix() {
-    let tkk = cookies().get("token").value
+    let tkk = (cookies() as unknown as UnsafeUnwrappedCookies).get("token").value
     const config = {
       headers: { 
         Authorization: `Bearer ${tkk}`,
@@ -238,7 +238,7 @@ import { cookies } from "next/headers";
   }
 
   function getCaixa() {
-    let tkk = cookies().get("token").value
+    let tkk = (cookies() as unknown as UnsafeUnwrappedCookies).get("token").value
     const config = {
       headers: { 
         Authorization: `Bearer ${tkk}`,
@@ -249,7 +249,7 @@ import { cookies } from "next/headers";
   }
 
   function getContagemPedido() {
-    let tkk = cookies().get("token").value
+    let tkk = (cookies() as unknown as UnsafeUnwrappedCookies).get("token").value
     const config = {
       headers: { 
         Authorization: `Bearer ${tkk}`,
@@ -260,7 +260,7 @@ import { cookies } from "next/headers";
   }
 
   function getAvaliacao(id) {
-    let tkk = cookies().get("token").value
+    let tkk = (cookies() as unknown as UnsafeUnwrappedCookies).get("token").value
     const config = {
       headers: { 
         Authorization: `Bearer ${tkk}`,

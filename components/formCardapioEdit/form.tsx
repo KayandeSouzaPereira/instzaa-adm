@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
-import {setItemCardapio} from '../../service/service'
+import {setItemCardapio} from '../service/service'
 
 
 import Previews from '../uploadImage/index'

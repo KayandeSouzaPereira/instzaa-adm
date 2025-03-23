@@ -1,18 +1,14 @@
-
-import { columns, Cardapio, Pedido, columnsPedido, columnsPix, PagamentoPix } from "../components/columns"
-import { DataTable } from "./formCardapio/data-table"
+import { columns, Cardapio, Pedido, columnsPedido, columnsPix, PagamentoPix } from "../columns"
+import { DataTable } from "../formCardapio/data-table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Toaster, toast } from "sonner";
 import { getCardapio, getPedidos, getEmpresa, getCaixa, getPix, getContagemPedido } from "../service/service";
-import { EmpresaDto } from "./formEmpresa/form";
-import { params } from "../components/token";
-import AvatarComp, {checkContPedidos} from "../components/Avatar";
+import { EmpresaDto } from "../formEmpresa/form";
+import { params } from "../token";
+import AvatarComp from "../Avatar";
 
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"

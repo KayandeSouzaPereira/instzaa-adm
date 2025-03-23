@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { deleteItemCardapio, deletePedido, updateStatusPedido, updateStatusCancelamentoPedido } from "@/app/service/service"
+import { deleteItemCardapio, deletePedido, updateStatusPedido, updateStatusCancelamentoPedido } from "../service/service"
 import {
   Dialog,
   DialogContent,
@@ -21,9 +21,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Pencil2Icon, DoubleArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons"
-import { ProfileFormEdit } from "../../tabela/formCardapioEdit/form"
-import { PedidoFormEdit } from "@/app/tabela/formPedidoEdit/form"
-import { getAvaliacao } from "@/app/service/service"
+import { ProfileFormEdit } from "../formCardapioEdit/form"
+import { PedidoFormEdit } from "../formPedidoEdit/form"
 
 export type Cardapio = {
     id: string
