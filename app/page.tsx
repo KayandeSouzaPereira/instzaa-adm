@@ -1,6 +1,6 @@
-'use client';
+
 import "../components/globals.css"
-import { Inter as FontSans } from "next/font/google"
+import { Inter as FontSans } from "next/font/google";
 import {
   Card,
   CardContent,
@@ -8,7 +8,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
+import Spline from '@splinetool/react-spline/next';
 
 import { ModeToggle } from "@/components/darkmode";
 import { Loginform } from "@/components/loginform";
@@ -22,7 +23,11 @@ export default function Home() {
   return (
     <div>
       <main className="flex min-h-screen flex-col items-center pt-5 ph-20 h-full">
+      <Spline
+            scene="https://prod.spline.design/LnG4vWbScej-SnCk/scene.splinecode" 
+          />
          <div className="absolute flex min-h-screen h-full flex-row items-start pt-[200px] left-[150px]">
+        
         <Card className="w-[350px] justify">
         <CardHeader>
           <CardTitle>Instzaa</CardTitle>
